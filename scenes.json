@@ -1,42 +1,87 @@
 [
     {
-    "scene": 1,
-    "prompt": "A close cinematic interior shot of a four-year-old Indian girl standing very close to her mother, looking directly into her eyes. The child’s face is calm, serious, and unnaturally mature for her age, lips slightly parted as if about to speak something heavy. The mother is kneeling or bending down, confused and emotionally alert, sensing something wrong. Background is a simple 1930s Delhi house interior with dim oil-lamp lighting, deep shadows, quiet tension in the air. The moment feels frozen, like the calm before a storm. Please generate this video in 16:9 aspect ratio."
+      "scene": 1,
+      "prompt": "Wide cinematic establishing shot of an open rural ground. A group of villagers stands scattered in silence, as if waiting for something to begin. No movement yet. Neutral daylight, earthy colors, calm but uneasy atmosphere. The frame introduces the idea of a traditional game without revealing details. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 2,
-    "prompt": "Medium close shot of the same young girl speaking calmly and confidently. Her eyes hold certainty, not imagination. The mother’s face is partially visible, shocked and tense, as if the words are impossible to process. The room feels colder, shadows slightly stronger, background softly blurred to keep full focus on the child’s expression. This is the first verbal crack in reality. Please generate this video in 16:9 aspect ratio."
+      "scene": 2,
+      "prompt": "Medium-wide shot of villagers suddenly running across the open ground. One individual slightly slower than the others, another figure close behind, creating the idea of being caught. No aggression, no panic—just motion and inevitability. Documentary-style realism. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 3,
-    "prompt": "A dramatic slow-motion style frame: a steel or glass tumbler slipping from the mother’s trembling hand mid-air, moments before hitting the floor. The mother’s fingers are frozen in shock. In the background, the child stands still, unfazed. Reflections in the falling glass subtly mirror the child’s face. High tension, silence-heavy atmosphere. Please generate this video in 16:9 aspect ratio."
+      "scene": 3,
+      "prompt": "Symbolic warning frame. Faces of villagers frozen in serious expressions. Darker contrast, slightly lowered exposure. Wind moves dust or cloth in the background, suggesting danger without showing violence. The mood communicates consequence, not action. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 4,
-    "prompt": "Symbolic cinematic frame. The child stands in the foreground, half her face in light, half swallowed by shadow. The background fades into darkness, removing all distractions. The mood is serious, unsettling, and heavy, visually communicating that this situation is beyond normal childhood imagination. Please generate this video in 16:9 aspect ratio."
+      "scene": 4,
+      "prompt": "Wide aerial-style establishing shot of Nilgiri, Odisha. Green hills, dense vegetation, scattered rural homes. Soft daylight and natural colors. Calm geography shot clearly setting location before events unfold. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 5,
-    "prompt": "Wide establishing shot of 1930s Delhi. Narrow lanes, old tiled houses, hand-pulled carts, people in traditional clothing. Soft morning haze, muted earthy colors. Calm everyday life contrasts sharply with the mystery unfolding inside one small home. Please generate this video in 16:9 aspect ratio."
+      "scene": 5,
+      "prompt": "Wide observational shot near a village temple. Villagers gather slowly, some standing, some sitting. The mood is ritualistic and quiet, like a tradition about to begin. Camera remains neutral and distant. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 6,
-    "prompt": "Interior wide shot of a modest middle-class Delhi home. Simple furniture, oil lamp, quiet domestic setting. In the center sits the small girl, silent and composed, while adults move around her unaware. The lighting subtly isolates her, hinting that something extraordinary hides within this ordinary space. Please generate this video in 16:9 aspect ratio."
+      "scene": 6,
+      "prompt": "Medium shot of the main temple priest standing near the temple entrance. He wears traditional attire, posture upright, expression composed and authoritative. No action yet—pure introduction of the figure. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 7,
-    "prompt": "Portrait-style cinematic frame of Shanti Devi. She faces the camera directly. Background minimal and dark. Her expression is neutral but intense, eyes unusually deep for a child. This frame introduces her as the central figure of the story. Please generate this video in 16:9 aspect ratio."
+      "scene": 7,
+      "prompt": "Clear action shot: the priest raises his hand and gestures forward, signaling people to run. Villagers in the background begin moving away. The gesture is calm, not aggressive. Clean, explanatory framing. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 8,
-    "prompt": "Montage-style composition within a single frame: baby Shanti, toddler Shanti, and four-year-old Shanti, all shown observing silently while others talk around her. No smiles, no crying—only quiet watching. The mood is eerie but grounded, emphasizing prolonged silence. Please generate this video in 16:9 aspect ratio."
+      "scene": 8,
+      "prompt": "Follow-up medium shot keeping the priest centered as he steps forward from his original position. His face remains neutral, focused. The movement suggests transition from instruction to participation. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 9,
-    "prompt": "Interior clinic scene. A doctor speaks seriously to worried parents while holding papers. Shanti sits on a bench nearby, calm and expressionless, eyes lowered. Cold, clinical lighting contrasts with parental anxiety. Please generate this video in 16:9 aspect ratio."
+      "scene": 9,
+      "prompt": "Wide shot of an open ground. The priest runs behind villagers at a measured pace. The chase is symbolic and slow, not intense. Natural lighting, steady camera, documentary realism. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     },
     {
-    "scene": 10,
-    "prompt": "A pandit sits near an oil lamp, studying a handwritten horoscope chart. Sacred threads, traditional attire. Parents listen anxiously. Shanti sits quietly in the background, detached. The scene blends belief, fear, and helplessness. Please generate this video in 16:9 aspect ratio."
+      "scene": 10,
+      "prompt": "Medium shot of the priest reaching out toward a participant, just short of contact. The focus is on the attempt, not the result. Faces show seriousness, not fear. Safe and explanatory visual. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 11,
+      "prompt": "Focused shot of one participant being singled out while others slow down in the background. The priest’s attention is clearly on this person. Observational tone, no physical force. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 12,
+      "prompt": "Symbolic elimination shot. The selected person steps aside from the group, standing alone. Others remain in the background. No humiliation, no harm—only separation. Clean visual clarity. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 13,
+      "prompt": "Interior temple shot. A Durga idol framed respectfully with flowers, lamps, and offerings placed in front. Soft warm lighting. No human presence near the idol. Ritual implication only, no explicit act. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 14,
+      "prompt": "Medium-wide shot of villagers standing with folded hands, eyes closed or lowered in prayer. Expressions show belief and acceptance. Neutral lighting, calm atmosphere. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 15,
+      "prompt": "Symbolic spiritual visual. Close-up of temple bells and slowly rising incense smoke. Soft focus, gentle motion, quiet reverence. No supernatural effects. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 16,
+      "prompt": "Explanatory investigative shot. Close-up of official-looking documents spread on a desk. The year '2009' is clearly visible on one paper. Neutral lighting, serious tone. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 17,
+      "prompt": "Daytime exterior wide shot of the  building. Stable framing, natural daylight, purely informational visual. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 18,
+      "prompt": "Interior-style legal visual. Close-up of hands reviewing documents on a courtroom desk. No faces shown. Papers are neatly arranged, serious and official tone. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 19,
+      "prompt": "Clear explanatory close-up of an official document stamped boldly with the word 'BANNED' in red. High contrast, simple composition, instant narrative clarity. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 20,
+      "prompt": "Present-day village wide shot. Similar ritual setting as earlier, villagers gathered again, suggesting the tradition continues. Neutral, factual framing without judgment. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
+    },
+    {
+      "scene": 21,
+      "prompt": "Transition shot focusing on offerings—flowers, coconuts, incense—being prepared instead of people. Calm, grounded visual indicating a shift in practice. Soft daylight. Use the uploaded image aspect ratio. Gnerate this video in 16:9 aspect ratio."
     }
-    ]
+  ]
+  

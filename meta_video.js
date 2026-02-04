@@ -59,7 +59,7 @@ const path = require('path');
     await page.keyboard.press('Backspace');
 
     // Type prompt
-    await page.keyboard.type(scene.prompt, { delay: 8 });
+    await page.keyboard.type(scene.prompt, { delay: 9 });
     console.log('✍️ Prompt typed');
 
     // Open attachment menu
