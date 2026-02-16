@@ -1,7 +1,6 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
 
 (async () => {
 
@@ -9,127 +8,125 @@ const https = require('https');
     'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
   const USER_DATA_DIR =
-    'C:\\Users\\mypcccc\\chrome-automation-profile';
+    'C:\\Users\\nitesh\\chrome-meta-profile';
 
-  const QWEN_URL = 'https://chat.qwen.ai';
+  const META_URL = 'https://meta.ai/';
+  const SCENES_FILE = './scenes.json';
+  const IMAGE_FOLDER = path.join(__dirname, 'downloads');
 
-  const SCENES_PATH = path.join(__dirname, 'scenes.json');
-  const DOWNLOAD_FOLDER = path.join(__dirname, 'downloads');
-
-  const MAX_PER_RUN = 10;
-
-  if (!fs.existsSync(DOWNLOAD_FOLDER)) {
-    fs.mkdirSync(DOWNLOAD_FOLDER);
-  }
-
-  let scenes = JSON.parse(fs.readFileSync(SCENES_PATH, 'utf8'));
+  const scenes = JSON.parse(fs.readFileSync(SCENES_FILE, 'utf8'));
 
   const context = await chromium.launchPersistentContext(USER_DATA_DIR, {
     executablePath: CHROME_PATH,
     headless: false,
-    viewport: null,
+    viewport: { width: 1280, height: 800 },
     args: [
-      '--start-maximized',
-      '--no-first-run',
-      '--no-default-browser-check'
+      '--disable-blink-features=AutomationControlled',
+      '--start-maximized'
     ]
   });
 
-  const page = await context.newPage();
-  await page.goto(QWEN_URL, { waitUntil: 'load' });
+  const page = context.pages()[0] || await context.newPage();
 
-  console.log('🌐 Qwen loaded');
+  await page.goto(META_URL, { waitUntil: 'domcontentloaded' });
+  console.log('✅ Meta AI loaded');
 
-  /* Activate Image Mode */
+  /* ============================================================
+     🔴 CLICK "CREATE VIDEO" ON FIRST LOAD
+     ============================================================ */
 
-  await page.waitForSelector('.mode-select .ant-dropdown-trigger');
-  await page.click('.mode-select .ant-dropdown-trigger');
-  await page.waitForTimeout(800);
+  // await page.waitForSelector('button[data-slot="capability-pill"]');
 
-  await page.click('li[role="menuitem"] span:has-text("Create Image")');
-  await page.waitForTimeout(1500);
+  // const createVideoButton = page.locator(
+  //   'button[data-slot="capability-pill"]:has-text("Create video")'
+  // );
 
-  await page.click('.size-selector .ant-dropdown-trigger');
-  await page.waitForTimeout(800);
+  // if (await createVideoButton.isVisible()) {
+  //   await createVideoButton.click();
+  //   console.log('🎬 Create video mode activated');
+  //   await page.waitForTimeout(2000);
+  // }
 
-  await page.click('li[role="menuitem"]:has-text("9:16")');
-  await page.waitForTimeout(1500);
+  /* ============================================================
+     🟢 FOCUS REAL EDITOR
+     ============================================================ */
 
-  console.log('🚀 Starting generation loop');
+  // await page.waitForFunction(() => {
+  //   const el = document.querySelector('div[contenteditable="true"]');
+  //   if (!el) return false;
+  //   el.focus();
+  //   return true;
+  // });
 
-  let generatedCount = 0;
+  console.log('✅ Real editor focused');
 
-  for (let i = 0; i < scenes.length; i++) {
+  /* ============================================================
+     🚀 MAIN LOOP
+     ============================================================ */
 
-    if (generatedCount >= MAX_PER_RUN) break;
+  for (const scene of scenes) {
 
-    if (scenes[i].Completed === true) {
-      console.log(`⏭ Scene ${scenes[i].scene} skipped`);
+    console.log(`🎬 Scene ${scene.scene} started`);
+
+    const imagePath = path.join(
+      IMAGE_FOLDER,
+      `Scene_${String(scene.scene).padStart(2, '0')}.png`
+    );
+
+    if (!fs.existsSync(imagePath)) {
+      console.log(`❌ Image not found: ${imagePath}`);
       continue;
     }
 
-    console.log(`🎬 Generating Scene ${scenes[i].scene}`);
+    // Clear editor (Windows)
+    await page.keyboard.down('Control');
+    await page.keyboard.press('A');
+    await page.keyboard.up('Control');
+    await page.keyboard.press('Backspace');
 
-    const promptBox = await page.waitForSelector('textarea');
+    // Type prompt
+    await page.keyboard.type(scene.prompt, { delay: 9 });
+    console.log('✍️ Prompt typed');
 
-    const previousImages = await page.$$eval('img.qwen-image', imgs =>
-      imgs.map(img => img.src)
+    // Open attachment menu
+    await page.click(
+      'button[data-testid="composer-add-attachment-button"]',
+      { force: true }
     );
+    console.log('➕ Attachment menu opened');
 
-    await promptBox.fill('');
-    await promptBox.type(scenes[i].prompt, { delay: 8 });
-    await promptBox.press('Enter');
-
-    console.log('⏳ Waiting 40 seconds...');
-    await page.waitForTimeout(40000);
-
-    console.log('🔍 Detecting new image...');
-
-    const newImageHandle = await page.waitForFunction(
-      prev => {
-        const imgs = Array.from(document.querySelectorAll('img.qwen-image'));
-        const fresh = imgs.find(img => !prev.includes(img.src));
-        return fresh ? fresh.src : null;
-      },
-      previousImages,
-      { timeout: 0 }
-    );
-
-    const imageUrl = await newImageHandle.jsonValue();
-
-    console.log('🖼 Image URL extracted');
-    console.log(imageUrl);
-
-    /* DIRECT DOWNLOAD USING HTTPS */
-
-    const filePath = path.join(
-      DOWNLOAD_FOLDER,
-      `Scene_${String(scenes[i].scene).padStart(2, '0')}.png`
-    );
-
-    await new Promise((resolve, reject) => {
-      https.get(imageUrl, res => {
-        const fileStream = fs.createWriteStream(filePath);
-        res.pipe(fileStream);
-        fileStream.on('finish', () => {
-          fileStream.close(resolve);
-        });
-      }).on('error', reject);
+    // Wait for file input
+    await page.waitForSelector('input[type="file"]', {
+      state: 'attached',
+      timeout: 5000
     });
 
-    console.log(`📥 Saved Scene_${scenes[i].scene}.png`);
+    // Attach image
+    await page.setInputFiles('input[type="file"]', imagePath);
+    console.log('🖼️ Image attached');
 
-    scenes[i].Completed = true;
-    fs.writeFileSync(SCENES_PATH, JSON.stringify(scenes, null, 2));
+    // Close attachment popover
+    await page.keyboard.press('Escape');
 
-    console.log(`🟢 Scene ${scenes[i].scene} marked Completed`);
+    console.log('⏳ Waiting 9 seconds before sending...');
+    await page.waitForTimeout(9000);
 
-    generatedCount++;
+    // Refocus editor
+    await page.evaluate(() => {
+      const el = document.querySelector('div[contenteditable="true"]');
+      if (el) el.focus();
+    });
 
-    console.log('🕒 Waiting 40 seconds before next...');
-    await page.waitForTimeout(40000);
+    // Send (start video generation)
+    await page.keyboard.press('Enter');
+    console.log('🚀 Video generation triggered');
+
+    console.log('🕒 Cooling down 60 seconds...');
+    await page.waitForTimeout(60000);
+
+    console.log(`✅ Scene ${scene.scene} completed`);
   }
 
-  console.log(`🎉 Run finished. Generated ${generatedCount} images.`);
+  console.log('🎉 ALL SCENES SENT SUCCESSFULLY');
 
 })();
