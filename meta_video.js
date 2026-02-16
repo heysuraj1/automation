@@ -3,25 +3,26 @@ const fs = require('fs');
 const path = require('path');
 
 (async () => {
+
   const CHROME_PATH =
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
   const USER_DATA_DIR =
-    '/Users/nitesh/chrome-meta-profile';
+    'C:\\Users\\nitesh\\chrome-meta-profile';
 
   const META_URL = 'https://meta.ai/';
   const SCENES_FILE = './scenes.json';
+  const IMAGE_FOLDER = path.join(__dirname, 'downloads');
 
   const scenes = JSON.parse(fs.readFileSync(SCENES_FILE, 'utf8'));
 
   const context = await chromium.launchPersistentContext(USER_DATA_DIR, {
     executablePath: CHROME_PATH,
     headless: false,
-    viewport: { width: 1280, height: 720 },
+    viewport: { width: 1280, height: 800 },
     args: [
       '--disable-blink-features=AutomationControlled',
-      '--no-first-run',
-      '--no-default-browser-check'
+      '--start-maximized'
     ]
   });
 
@@ -30,20 +31,45 @@ const path = require('path');
   await page.goto(META_URL, { waitUntil: 'domcontentloaded' });
   console.log('✅ Meta AI loaded');
 
-  // Focus real editor
-  await page.waitForFunction(() => {
-    const el = document.querySelector('div[contenteditable="true"]');
-    if (!el) return false;
-    el.focus();
-    return true;
-  });
+  /* ============================================================
+     🔴 CLICK "CREATE VIDEO" ON FIRST LOAD
+     ============================================================ */
+
+  // await page.waitForSelector('button[data-slot="capability-pill"]');
+
+  // const createVideoButton = page.locator(
+  //   'button[data-slot="capability-pill"]:has-text("Create video")'
+  // );
+
+  // if (await createVideoButton.isVisible()) {
+  //   await createVideoButton.click();
+  //   console.log('🎬 Create video mode activated');
+  //   await page.waitForTimeout(2000);
+  // }
+
+  /* ============================================================
+     🟢 FOCUS REAL EDITOR
+     ============================================================ */
+
+  // await page.waitForFunction(() => {
+  //   const el = document.querySelector('div[contenteditable="true"]');
+  //   if (!el) return false;
+  //   el.focus();
+  //   return true;
+  // });
 
   console.log('✅ Real editor focused');
 
+  /* ============================================================
+     🚀 MAIN LOOP
+     ============================================================ */
+
   for (const scene of scenes) {
+
     console.log(`🎬 Scene ${scene.scene} started`);
 
-    const imagePath = path.resolve(
+    const imagePath = path.join(
+      IMAGE_FOLDER,
       `Scene_${String(scene.scene).padStart(2, '0')}.png`
     );
 
@@ -52,10 +78,10 @@ const path = require('path');
       continue;
     }
 
-    // Clear editor
-    await page.keyboard.down('Meta');
+    // Clear editor (Windows)
+    await page.keyboard.down('Control');
     await page.keyboard.press('A');
-    await page.keyboard.up('Meta');
+    await page.keyboard.up('Control');
     await page.keyboard.press('Backspace');
 
     // Type prompt
@@ -69,40 +95,38 @@ const path = require('path');
     );
     console.log('➕ Attachment menu opened');
 
-    // Wait for hidden file input
-    await page.waitForSelector(
-      'input[type="file"]',
-      { state: 'attached', timeout: 5000 }
-    );
+    // Wait for file input
+    await page.waitForSelector('input[type="file"]', {
+      state: 'attached',
+      timeout: 5000
+    });
 
     // Attach image
     await page.setInputFiles('input[type="file"]', imagePath);
     console.log('🖼️ Image attached');
 
-    // Close attachment menu
+    // Close attachment popover
     await page.keyboard.press('Escape');
-    console.log('❎ Attachment menu closed');
 
-    // Wait before sending
     console.log('⏳ Waiting 9 seconds before sending...');
     await page.waitForTimeout(9000);
 
     // Refocus editor
     await page.evaluate(() => {
       const el = document.querySelector('div[contenteditable="true"]');
-      el && el.focus();
+      if (el) el.focus();
     });
 
-    // Send prompt (START VIDEO GENERATION)
+    // Send (start video generation)
     await page.keyboard.press('Enter');
     console.log('🚀 Video generation triggered');
 
-    // 🔴 CRITICAL: WAIT 3 MINUTES BEFORE NEXT SCENE
-    console.log('🕒 Cooling down for 1 minutes to avoid Meta AI crash...');
-    await page.waitForTimeout(60000); // 1 minutes
+    console.log('🕒 Cooling down 60 seconds...');
+    await page.waitForTimeout(60000);
 
-    console.log(`✅ Scene ${scene.scene} cooldown completed`);
+    console.log(`✅ Scene ${scene.scene} completed`);
   }
 
   console.log('🎉 ALL SCENES SENT SUCCESSFULLY');
+
 })();
